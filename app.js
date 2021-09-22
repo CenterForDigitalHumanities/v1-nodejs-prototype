@@ -60,7 +60,7 @@ async function mongoConnection(){
   try {
       //await mongoose.connect('mongodb+srv://rerumBot:f%40kePassword@cluster0.qytdr.mongodb.net/annotationStore?retryWrites=true&w=majority', { useNewUrlParser: true});
       //await mongoose.connect('mongodb://rerum-dev:69Trombones@f-vl-cdh-img-01:27017/annotationStoreDev?w=majority&authMechanism=SCRAM-SHA-256', { useNewUrlParser: true});
-      await mongoose.connect('mongodb://127.0.0.1:27017', { useNewUrlParser: true});
+      await mongoose.connect('mongodb://127.0.0.1:27017/annotationStoreDev', { useNewUrlParser: true});
       console.log("...returning mongoose connection");
       return mongoose.connection;
 

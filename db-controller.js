@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+var mongoose = require('mongoose');
 // Import contact model
 Model = require('./db-object-model.js');
 
@@ -20,13 +21,19 @@ exports.save = function (req, res) {
     const RERUM_PREFIX = "http://devstore.rerum.io/v1/id/"
     modelObj["_id"] = id
     modelObj["@id"] = req.body["@id"] ? req.body["@id"] : RERUM_PREFIX+new mongoose.Types.ObjectId();
+    modelObj.name = "Hello "+Date.now();
     // save the contact and check for errors
     //save() means the object being saved HAS TO BE AN INSTANCE OF THE MODEL.  
+    console.log("Use Model.save to put the following object into the db");
+    console.log(modelObj);
     modelObj.save(function (err) {
         if (err){
-            res.json(err);
+            console.log("Error with Model.save");
+            console.error(err);
+            res.send(err);
         }
         else{
+            console.log("Success with Model.save");
             res.json(modelObj);
         }
     });
@@ -43,11 +50,16 @@ exports.create = function (req, res) {
     modelObj.name = "Hello "+Date.now();
     // save the contact and check for errors
     //Here, we can hand in an object that is not formed from the model
+    console.log("Use Model.create to put the following object into the db");
+    console.log(modelObj);
     Model.create(modelObj, function (err, data) {
         if (err){
-            res.json(err);
+            console.log("Error with Model.create");
+            console.error(err);
+            res.send(err);
         }
         else{
+            console.log("Success with Model.create");
             res.json(data); //hmm not sure this is right, maybe just do modelObj?
         }
     });
@@ -55,9 +67,10 @@ exports.create = function (req, res) {
 
 
 // Handle find by property object matching
-exports.findByProp = function (req, res) {
+exports.getByProp = function (req, res) {
     //let prop = req.readPropFromBody()
-    let prop = {"@id":"http://devstore.rerum.io/v1/id/11111"}
+    let id =  req.params["_id"]
+    let prop = {"@id":"http://devstore.rerum.io/v1/id/"+id}
     console.log("view controller")
     Model.findOne(prop, function (err, obj) {
         if (err){
@@ -74,8 +87,8 @@ exports.findByProp = function (req, res) {
 };
 
 // Handle find by _id
-exports.findById = function (req, res) {
-    let id = "5b2c0d5de4b0fc5d4aeb709f" //bot!
+exports.getByID = function (req, res) {
+    let id =  req.params["_id"]
     Model.findById(id, function (err, obj) {
         if (err){
             console.error("")

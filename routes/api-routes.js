@@ -35,20 +35,22 @@ router.get('/get2', async function (req, res) {
 // API routes
 
 // api/simple to just return some JSON, no DB interactions
-router.route('/simple')
+router.route('/test')
     .get(controller.index)
 
 // api/simple/id to fire a request for http://devstore.rerum.io/v1/id/11111 from annotationStoreDev on img-01
-router.route('/simple/:id')
-    .get(controller.findById)
+router.route('/getByID/:_id')
+    .get(controller.getByID)
 
 // api/simple/query to fire a request for http://devstore.rerum.io/v1/id/11111 from annotationStoreDev on img-01
-router.route('/simple/:qry')
-    .get(controller.findByProp)
+router.route('/getByProp/:_id')
+    .get(controller.getByProp)
 
 // api/simple/create to make a simple object.  Doesn't pass anything in body right now.
-router.route("/simple/:create")
+router.route("/makeNew")
     .get(controller.create)
+
+router.route("/saveNew")
     .post(controller.save)
     
 // Export API routes
