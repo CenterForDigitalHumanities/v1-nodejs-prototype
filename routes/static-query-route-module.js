@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
   console.log(__dirname);
-  res.sendFile("../public/query1.html", {"root":"."});
+  res.sendFile("query1.html", {"root":"../public"});
 });
 
 module.exports = router;
