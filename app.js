@@ -23,18 +23,7 @@ var apiRouter = require('./routes/api-routes.js');
 //var dynamicQueryRouter = require('./routes/dynamic-query-route-module');
 var app = express();
 
-/*
-// Added check for DB connection
-if(!db){
-    console.log("Error connecting db in app initializer")
-}
-else{
-    console.log("Db connected successfully in app initializer, see some info below")
-    console.log(db)
-    console.log(db.databaseName)
-    //console.log(db.listCollections())
-}
-*/
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -69,8 +58,9 @@ app.use(function(err, req, res, next) {
 async function mongoConnection(){
   console.log("Awaiting mongo connection...")
   try {
-      await mongoose.connect('mongodb+srv://rerumBot:f%40kePassword@cluster0.qytdr.mongodb.net/annotationStore?retryWrites=true&w=majority', { useNewUrlParser: true});
+      //await mongoose.connect('mongodb+srv://rerumBot:f%40kePassword@cluster0.qytdr.mongodb.net/annotationStore?retryWrites=true&w=majority', { useNewUrlParser: true});
       //await mongoose.connect('mongodb://rerum-dev:69Trombones@f-vl-cdh-img-01:27017/annotationStoreDev?w=majority&authMechanism=SCRAM-SHA-256', { useNewUrlParser: true});
+      await mongoose.connect('mongodb://127.0.0.1:27017', { useNewUrlParser: true});
       console.log("...returning mongoose connection");
       return mongoose.connection;
 

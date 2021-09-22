@@ -46,9 +46,10 @@ router.route('/simple/:id')
 router.route('/simple/:qry')
     .get(controller.findByProp)
 
-// api/simple/create to make a simple object that can be queried for
+// api/simple/create to make a simple object.  Doesn't pass anything in body right now.
 router.route("/simple/:create")
-    .post(controller.findByProp)
+    .get(controller.create)
+    .post(controller.save)
     
 // Export API routes
 module.exports = router;

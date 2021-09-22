@@ -13,8 +13,48 @@ exports.index = function (req, res) {
     });
 };
 
+// Handle save new object
+exports.save = function (req, res) {
+    let modelObj = new Model();
+    const id = req.body["_id"] ? req.body["_id"] : new mongoose.Types.ObjectId();
+    const RERUM_PREFIX = "http://devstore.rerum.io/v1/id/"
+    modelObj["_id"] = id
+    modelObj["@id"] = req.body["@id"] ? req.body["@id"] : RERUM_PREFIX+new mongoose.Types.ObjectId();
+    // save the contact and check for errors
+    //save() means the object being saved HAS TO BE AN INSTANCE OF THE MODEL.  
+    modelObj.save(function (err) {
+        if (err){
+            res.json(err);
+        }
+        else{
+            res.json(modelObj);
+        }
+    });
+};
 
-// Handle view contact info
+
+// Handle create new object
+exports.create = function (req, res) {
+    var modelObj = new Model();
+    const id = new mongoose.Types.ObjectId();
+    const RERUM_PREFIX = "http://devstore.rerum.io/v1/id/";
+    modelObj["_id"] = id;
+    modelObj["@id"] = RERUM_PREFIX+id;
+    modelObj.name = "Hello "+Date.now();
+    // save the contact and check for errors
+    //Here, we can hand in an object that is not formed from the model
+    Model.create(modelObj, function (err, data) {
+        if (err){
+            res.json(err);
+        }
+        else{
+            res.json(data); //hmm not sure this is right, maybe just do modelObj?
+        }
+    });
+};
+
+
+// Handle find by property object matching
 exports.findByProp = function (req, res) {
     //let prop = req.readPropFromBody()
     let prop = {"@id":"http://devstore.rerum.io/v1/id/11111"}
@@ -33,7 +73,7 @@ exports.findByProp = function (req, res) {
     });
 };
 
-// Handle view contact info
+// Handle find by _id
 exports.findById = function (req, res) {
     let id = "5b2c0d5de4b0fc5d4aeb709f" //bot!
     Model.findById(id, function (err, obj) {
@@ -48,61 +88,3 @@ exports.findById = function (req, res) {
         }
     });
 };
-
-/*
-// Handle create contact actions
-exports.new = function (req, res) {
-    var contact = new Contact();
-    contact.name = req.body.name ? req.body.name : contact.name;
-    contact.gender = req.body.gender;
-    contact.email = req.body.email;
-    contact.phone = req.body.phone;
-// save the contact and check for errors
-    contact.save(function (err) {
-        // if (err)
-        //     res.json(err);
-res.json({
-            message: 'New contact created!',
-            data: contact
-        });
-    });
-};
-*/
-
-/*
-// Handle update contact info
-exports.update = function (req, res) {
-Contact.findById(req.params.contact_id, function (err, contact) {
-        if (err)
-            res.send(err);
-contact.name = req.body.name ? req.body.name : contact.name;
-        contact.gender = req.body.gender;
-        contact.email = req.body.email;
-        contact.phone = req.body.phone;
-// save the contact and check for errors
-        contact.save(function (err) {
-            if (err)
-                res.json(err);
-            res.json({
-                message: 'Contact Info updated',
-                data: contact
-            });
-        });
-    });
-};
-*/
-/*
-// Handle delete contact
-exports.delete = function (req, res) {
-    Contact.remove({
-        _id: req.params.contact_id
-    }, function (err, contact) {
-        if (err)
-            res.send(err);
-res.json({
-            status: "success",
-            message: 'Contact deleted'
-        });
-    });
-};
-*/
