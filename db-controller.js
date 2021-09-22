@@ -70,7 +70,8 @@ exports.create = function (req, res) {
 exports.getByProp = function (req, res) {
     //let prop = req.readPropFromBody()
     let id =  req.params["_id"]
-    let prop = {"@id":"http://devstore.rerum.io/v1/id/"+id}
+    const RERUM_PREFIX = "http://devstore.rerum.io/v1/id/";
+    let prop = {"@id":RERUM_PREFIX+id}
     console.log("view controller")
     Model.findOne(prop, function (err, obj) {
         if (err){

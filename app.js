@@ -19,8 +19,8 @@ console.log("on line passed setting db")
 
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api-routes.js');
-//var staticQueryRouter = require('./routes/static-query-route-module');
-//var dynamicQueryRouter = require('./routes/dynamic-query-route-module');
+//var staticQueryRouter = require('./routes/static-query-route-module'); //Serve /public/query1.html
+//var dynamicQueryRouter = require('./routes/dynamic-query-route-module'); //Perform /query in router and serve data to a view
 var app = express();
 
 
@@ -63,17 +63,6 @@ async function mongoConnection(){
       await mongoose.connect('mongodb://127.0.0.1:27017/annotationStoreDev', { useNewUrlParser: true});
       console.log("...returning mongoose connection");
       return mongoose.connection;
-
-      /*
-      const { MongoClient } = require('mongodb');
-      const uri = "mongodb+srv://rerumBot:<password>@cluster0.qytdr.mongodb.net/annotationStore?retryWrites=true&w=majority";
-      const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-      client.connect(err => {
-        const collection = client.db("test").collection("devices");
-        // perform actions on the collection object
-        client.close();
-      });
-      */
   } 
   catch (err) {
     console.log('mongoose.connect error in app initializer: ');
