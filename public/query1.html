@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+    author: Bryan Haberberger <bryan.j.haberberger@slu.edu>
+    -->
+<html>
+
+<head>
+    <title>Query to RERUM Using Node</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <input type="button" value="DO GET!" onclick="doGet()" />
+    <div id="msg">
+        Do some querying here.  This was routed to as a served HTML page!
+    </div>
+</body>
+
+<script type="text/javascript">
+    async function doGet(){
+        const queryObj = {"hello": "node"}
+        const ask = await fetch('http://tinydev.rerum.io/app/query', {
+          method: 'post',
+          body: JSON.stringify(queryObj),
+          headers: {'Content-Type': 'application/json;charset=utf8'}
+        })
+        .then(resp=>resp.json())
+        msg.innerHTML = JSON.stringify(ask)
+    }
+
+</script>
+
+</html>
