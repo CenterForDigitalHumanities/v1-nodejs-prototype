@@ -14,6 +14,7 @@ exports.index = function (req, res) {
     });
 };
 
+
 // Handle save new object
 exports.save = function (req, res) {
     let modelObj = new Model();

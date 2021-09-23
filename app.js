@@ -3,6 +3,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 var logger = require('morgan');
 let mongoose = require('mongoose');
@@ -28,12 +29,17 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+//Middleware to use
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(bodyParser.json());
+
+//Publicly available scripts, CSS, and HTML pages.
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Assign routes to the app.  This is processing URL patterns and pointing them to servlet logic
 app.use('/', indexRouter);
 //app.use('/static-query', staticQueryRouter);
 //app.use('/dynamic-query', dynamicQueryRouter);
@@ -55,6 +61,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+//Connect to a mongodb.
 async function mongoConnection(){
   console.log("Awaiting mongo connection...")
   try {

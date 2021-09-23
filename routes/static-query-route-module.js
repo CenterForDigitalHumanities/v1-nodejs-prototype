@@ -1,3 +1,5 @@
+/* a/url/path that services a static HTML file */
+
 var express = require('express');
 var router = express.Router();
 

@@ -1,3 +1,5 @@
+/* a/url/path that performs an asyncronous request for data, then feeds that data to a ejs view dynamicQuery.ejs */
+
 var express = require('express');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 var router = express.Router();
