@@ -67,8 +67,6 @@ async function mongoConnection(){
   console.log("Awaiting mongo connection...")
   try {
       await mongoose.connect(process.env.ATLAS_CONNECTION_STRING, { useNewUrlParser: true});
-      //await mongoose.connect('img-01-connection-string', { useNewUrlParser: true});
-      //await mongoose.connect('mongodb://127.0.0.1:27017/annotationStoreDev', { useNewUrlParser: true});
       console.log("...returning mongoose connection");
       return mongoose.connection;
   } 
