@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+require('dotenv').config()
 
 var logger = require('morgan');
 let mongoose = require('mongoose');
@@ -65,7 +66,7 @@ app.use(function(err, req, res, next) {
 async function mongoConnection(){
   console.log("Awaiting mongo connection...")
   try {
-      await mongoose.connect('atlas-connection-string', { useNewUrlParser: true});
+      await mongoose.connect(process.env.ATLAS_CONNECTION_STRING, { useNewUrlParser: true});
       //await mongoose.connect('img-01-connection-string', { useNewUrlParser: true});
       //await mongoose.connect('mongodb://127.0.0.1:27017/annotationStoreDev', { useNewUrlParser: true});
       console.log("...returning mongoose connection");
